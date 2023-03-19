@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "088fe808-f2b0-477d-b8f8-cb208939c357",
+		"name": "MockApiTEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17190350"
+	},
+	"item": [
+		{
+			"name": "AllStudents",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://63502df678563c1d82bb939a.mockapi.io/Students",
+					"protocol": "https",
+					"host": [
+						"63502df678563c1d82bb939a",
+						"mockapi",
+						"io"
+					],
+					"path": [
+						"Students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Student",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://63502df678563c1d82bb939a.mockapi.io/Students/22",
+					"protocol": "https",
+					"host": [
+						"63502df678563c1d82bb939a",
+						"mockapi",
+						"io"
+					],
+					"path": [
+						"Students",
+						"22"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Student",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://63502df678563c1d82bb939a.mockapi.io/Students",
+					"protocol": "https",
+					"host": [
+						"63502df678563c1d82bb939a",
+						"mockapi",
+						"io"
+					],
+					"path": [
+						"Students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "title",
+						"value": "firstname",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://63502df678563c1d82bb939a.mockapi.io/22?firstname=doctor",
+					"protocol": "https",
+					"host": [
+						"63502df678563c1d82bb939a",
+						"mockapi",
+						"io"
+					],
+					"path": [
+						"22"
+					],
+					"query": [
+						{
+							"key": "firstname",
+							"value": "doctor"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete sutdent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://63502df678563c1d82bb939a.mockapi.io/Students/6",
+					"protocol": "https",
+					"host": [
+						"63502df678563c1d82bb939a",
+						"mockapi",
+						"io"
+					],
+					"path": [
+						"Students",
+						"6"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
