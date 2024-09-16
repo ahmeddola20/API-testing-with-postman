@@ -1,0 +1,482 @@
+{
+	"info": {
+		"_postman_id": "0922cac6-52b1-4b73-b3a4-1770f7b9cb62",
+		"name": "Marvel Api testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17190350"
+	},
+	"item": [
+		{
+			"name": "characters",
+			"item": [
+				{
+					"name": "Fetches lists of characters",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://gateway.marvel.com/v1/public/comics?ts={{ts}}&apikey={{public_key}}&hash={{hash}}",
+							"protocol": "http",
+							"host": [
+								"gateway",
+								"marvel",
+								"com"
+							],
+							"path": [
+								"v1",
+								"public",
+								"comics"
+							],
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								},
+								{
+									"key": "hash",
+									"value": "{{hash}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches a single character by id",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://gateway.marvel.com/v1/public/comics?ts={{ts}}&apikey={{public_key}}&hash={{hash}}",
+							"protocol": "http",
+							"host": [
+								"gateway",
+								"marvel",
+								"com"
+							],
+							"path": [
+								"v1",
+								"public",
+								"comics"
+							],
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								},
+								{
+									"key": "hash",
+									"value": "{{hash}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of comics filtered by a character id",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://gateway.marvel.com/v1/public/comics?ts={{ts}}&apikey={{public_key}}&hash={{hash}}",
+							"protocol": "http",
+							"host": [
+								"gateway",
+								"marvel",
+								"com"
+							],
+							"path": [
+								"v1",
+								"public",
+								"comics"
+							],
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								},
+								{
+									"key": "hash",
+									"value": "{{hash}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of events filtered by a character id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of series filtered by a character id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of stories filtered by a character id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "comics",
+			"item": [
+				{
+					"name": "Fetches lists of comics",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches a single comic by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of characters filtered by a comic id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of creators filtered by a comic id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of events filtered by a comic id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of stories filtered by a comic id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "creators",
+			"item": [
+				{
+					"name": "Fetches lists of creators",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches a single creator by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of comics filtered by a creator id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of events filtered by a creator id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of series filtered by a creator id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of stories filtered by a creator id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "events",
+			"item": [
+				{
+					"name": "Fetches lists of events",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches a single event by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of characters filtered by an event id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of comics filtered by an event id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of series filtered by an event id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of stories filtered by an event id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "series",
+			"item": [
+				{
+					"name": "Fetches lists of series",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches a single comic series by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of characters filtered by a series id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of comics filtered by a series id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of events filtered by a series id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of stories filtered by a series id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "stories",
+			"item": [
+				{
+					"name": "Fetches lists of stories",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches a single comic story by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of characters filtered by a story id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of comics filtered by a story id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of events filtered by a story id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of series filtered by a story id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"// Import CryptoJS library for MD5 hashing\r",
+					"const CryptoJS = require('crypto-js');\r",
+					"\r",
+					"// Generate a timestamp (current time)\r",
+					"let ts = \"1\";\r",
+					"\r",
+					"// Get the public and private API keys from Postman environment variables\r",
+					"let publicKey = pm.environment.get(\"public_key\");\r",
+					"let privateKey = pm.environment.get(\"private_key\");\r",
+					"\r",
+					"// Generate the hash (MD5 of ts + privateKey + publicKey)\r",
+					"let hash = CryptoJS.MD5(ts + privateKey + publicKey).toString();\r",
+					"\r",
+					"// Set the timestamp and hash as environment variables to be used in the request\r",
+					"pm.environment.set(\"ts\", ts);\r",
+					"pm.environment.set(\"hash\", hash);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
