@@ -11,31 +11,44 @@
 			"item": [
 				{
 					"name": "Fetches lists of characters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Extract IDs from results\", function () {\r",
+									"    // Parse the response body as JSON\r",
+									"    let responseData = pm.response.json();\r",
+									"\r",
+									"    // Check if the 'results' array exists in the response\r",
+									"    if (responseData.data && responseData.data.results && Array.isArray(responseData.data.results)) {\r",
+									"        // Loop through the results array\r",
+									"        responseData.data.results.forEach(function (result) {\r",
+									"            // Log each ID to the console\r",
+									"            console.log(\"Extracted ID:\", result.id);\r",
+									"        });\r",
+									"    } else {\r",
+									"        console.log(\"Results array not found in the response.\");\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "in",
-									"value": "query",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://gateway.marvel.com/v1/public/comics?ts={{ts}}&apikey={{public_key}}&hash={{hash}}",
-							"protocol": "http",
+							"raw": "{{Base}}/characters?ts={{ts}}&apikey={{public_key}}",
 							"host": [
-								"gateway",
-								"marvel",
-								"com"
+								"{{Base}}"
 							],
 							"path": [
-								"v1",
-								"public",
-								"comics"
+								"characters"
 							],
 							"query": [
 								{
@@ -48,7 +61,8 @@
 								},
 								{
 									"key": "hash",
-									"value": "{{hash}}"
+									"value": "{{hash}}",
+									"disabled": true
 								}
 							]
 						}
@@ -58,30 +72,16 @@
 				{
 					"name": "Fetches a single character by id",
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "in",
-									"value": "query",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://gateway.marvel.com/v1/public/comics?ts={{ts}}&apikey={{public_key}}&hash={{hash}}",
-							"protocol": "http",
+							"raw": "{{Base}}/characters/{{characterId}}?ts={{ts}}&apikey={{public_key}}",
 							"host": [
-								"gateway",
-								"marvel",
-								"com"
+								"{{Base}}"
 							],
 							"path": [
-								"v1",
-								"public",
-								"comics"
+								"characters",
+								"{{characterId}}"
 							],
 							"query": [
 								{
@@ -91,10 +91,6 @@
 								{
 									"key": "apikey",
 									"value": "{{public_key}}"
-								},
-								{
-									"key": "hash",
-									"value": "{{hash}}"
 								}
 							]
 						}
@@ -104,29 +100,14 @@
 				{
 					"name": "Fetches lists of comics filtered by a character id",
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "in",
-									"value": "query",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://gateway.marvel.com/v1/public/comics?ts={{ts}}&apikey={{public_key}}&hash={{hash}}",
-							"protocol": "http",
+							"raw": "{{Base}}/comics?ts={{ts}}&apikey={{public_key}}",
 							"host": [
-								"gateway",
-								"marvel",
-								"com"
+								"{{Base}}"
 							],
 							"path": [
-								"v1",
-								"public",
 								"comics"
 							],
 							"query": [
@@ -137,10 +118,6 @@
 								{
 									"key": "apikey",
 									"value": "{{public_key}}"
-								},
-								{
-									"key": "hash",
-									"value": "{{hash}}"
 								}
 							]
 						}
@@ -151,7 +128,26 @@
 					"name": "Fetches lists of events filtered by a character id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{Base}}/comics?ts={{ts}}&apikey={{public_key}}",
+							"host": [
+								"{{Base}}"
+							],
+							"path": [
+								"comics"
+							],
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -159,7 +155,26 @@
 					"name": "Fetches lists of series filtered by a character id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{Base}}/comics?ts={{ts}}&apikey={{public_key}}",
+							"host": [
+								"{{Base}}"
+							],
+							"path": [
+								"comics"
+							],
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -167,9 +182,50 @@
 					"name": "Fetches lists of stories filtered by a character id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{Base}}/comics?ts={{ts}}&apikey={{public_key}}",
+							"host": [
+								"{{Base}}"
+							],
+							"path": [
+								"comics"
+							],
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -180,7 +236,20 @@
 					"name": "Fetches lists of comics",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -188,7 +257,20 @@
 					"name": "Fetches a single comic by id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -196,7 +278,26 @@
 					"name": "Fetches lists of characters filtered by a comic id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "site",
+								"value": "www.googel.com",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -204,7 +305,20 @@
 					"name": "Fetches lists of creators filtered by a comic id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -212,7 +326,20 @@
 					"name": "Fetches lists of events filtered by a comic id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -220,7 +347,20 @@
 					"name": "Fetches lists of stories filtered by a comic id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -233,7 +373,20 @@
 					"name": "Fetches lists of creators",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -241,7 +394,20 @@
 					"name": "Fetches a single creator by id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -249,7 +415,20 @@
 					"name": "Fetches lists of comics filtered by a creator id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -257,7 +436,20 @@
 					"name": "Fetches lists of events filtered by a creator id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -267,7 +459,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
 						}
 					},
 					"response": []
@@ -276,7 +478,20 @@
 					"name": "Fetches lists of stories filtered by a creator id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -289,7 +504,20 @@
 					"name": "Fetches lists of events",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -297,7 +525,20 @@
 					"name": "Fetches a single event by id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -305,7 +546,20 @@
 					"name": "Fetches lists of characters filtered by an event id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -313,7 +567,20 @@
 					"name": "Fetches lists of comics filtered by an event id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -321,7 +588,20 @@
 					"name": "Fetches lists of series filtered by an event id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -329,7 +609,20 @@
 					"name": "Fetches lists of stories filtered by an event id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -342,7 +635,20 @@
 					"name": "Fetches lists of series",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -350,7 +656,20 @@
 					"name": "Fetches a single comic series by id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -358,7 +677,20 @@
 					"name": "Fetches lists of characters filtered by a series id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -366,7 +698,20 @@
 					"name": "Fetches lists of comics filtered by a series id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -374,7 +719,20 @@
 					"name": "Fetches lists of events filtered by a series id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -382,7 +740,20 @@
 					"name": "Fetches lists of stories filtered by a series id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -395,7 +766,20 @@
 					"name": "Fetches lists of stories",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -403,7 +787,20 @@
 					"name": "Fetches a single comic story by id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -411,7 +808,20 @@
 					"name": "Fetches lists of characters filtered by a story id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -419,7 +829,20 @@
 					"name": "Fetches lists of comics filtered by a story id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -427,7 +850,20 @@
 					"name": "Fetches lists of events filtered by a story id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -435,13 +871,46 @@
 					"name": "Fetches lists of series filtered by a story id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
 					},
 					"response": []
 				}
 			]
 		}
 	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "hash",
+				"type": "string"
+			},
+			{
+				"key": "in",
+				"value": "query",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{hash}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -449,22 +918,7 @@
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
-					"// Import CryptoJS library for MD5 hashing\r",
-					"const CryptoJS = require('crypto-js');\r",
-					"\r",
-					"// Generate a timestamp (current time)\r",
-					"let ts = \"1\";\r",
-					"\r",
-					"// Get the public and private API keys from Postman environment variables\r",
-					"let publicKey = pm.environment.get(\"public_key\");\r",
-					"let privateKey = pm.environment.get(\"private_key\");\r",
-					"\r",
-					"// Generate the hash (MD5 of ts + privateKey + publicKey)\r",
-					"let hash = CryptoJS.MD5(ts + privateKey + publicKey).toString();\r",
-					"\r",
-					"// Set the timestamp and hash as environment variables to be used in the request\r",
-					"pm.environment.set(\"ts\", ts);\r",
-					"pm.environment.set(\"hash\", hash);"
+					""
 				]
 			}
 		},
