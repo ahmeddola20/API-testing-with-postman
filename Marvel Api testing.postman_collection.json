@@ -31,7 +31,16 @@
 									"        console.log(\"Results array not found in the response.\");\r",
 									"    }\r",
 									"});\r",
-									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
 									""
 								],
 								"type": "text/javascript",
@@ -71,6 +80,25 @@
 				},
 				{
 					"name": "Fetches a single character by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"results\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -103,13 +131,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/characters/{characterId}/comicsts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/characters/{{characterId}}/comicsts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"characters",
-								"{characterId}",
+								"{{characterId}}",
 								"comicsts={{ts}}&apikey={{public_key}}"
 							]
 						}
@@ -122,13 +150,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/characters/{characterId}/events?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/characters/{{characterId}}/events?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"characters",
-								"{characterId}",
+								"{{characterId}}",
 								"events"
 							],
 							"query": [
@@ -151,13 +179,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/characters/{characterId}/series?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/characters/{{characterId}}/series?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"characters",
-								"{characterId}",
+								"{{characterId}}",
 								"series"
 							],
 							"query": [
@@ -180,13 +208,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/characters/{characterId}/stories?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/characters/{{characterId}}/stories?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"characters",
-								"{characterId}",
+								"{{characterId}}",
 								"stories"
 							],
 							"query": [
@@ -232,6 +260,33 @@
 			"item": [
 				{
 					"name": "Fetches lists of comics",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Extract IDs from results and save\", function () {\r",
+									"    let responseData = pm.response.json();\r",
+									"    let ids = [];\r",
+									"\r",
+									"    if (responseData.data && responseData.data.results && Array.isArray(responseData.data.results)) {\r",
+									"        responseData.data.results.forEach(function (result) {\r",
+									"            ids.push(result.id); // Extract the IDs from the array\r",
+									"        });\r",
+									"\r",
+									"        // Save the extracted IDs as a JSON string in an environment variable\r",
+									"        pm.environment.set(\"extractedcomicsIDs\", JSON.stringify(ids));\r",
+									"    } else {\r",
+									"        console.log(\"Results array not found.\");\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -263,13 +318,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/comics/{comicId}?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/comics/{{comicId}}?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"comics",
-								"{comicId}"
+								"{{comicId}}"
 							],
 							"query": [
 								{
@@ -318,13 +373,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/comics/{comicId}/creators?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/comics/{{comicId}}/creators?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"comics",
-								"{comicId}",
+								"{{comicId}}",
 								"creators"
 							],
 							"query": [
@@ -347,14 +402,43 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/comics/{comicId}/events?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/comics/{{comicId}}/events?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"comics",
-								"{comicId}",
+								"{{comicId}}",
 								"events"
+							],
+							"query": [
+								{
+									"key": "ts",
+									"value": "{{ts}}"
+								},
+								{
+									"key": "apikey",
+									"value": "{{public_key}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetches lists of series filtered by a comic id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Base}}/comics/{{comicId}}/series ?ts={{ts}}&apikey={{public_key}}",
+							"host": [
+								"{{Base}}"
+							],
+							"path": [
+								"comics",
+								"{{comicId}}",
+								"series "
 							],
 							"query": [
 								{
@@ -376,12 +460,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/characters?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/comics/{{comicId}}/stories?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
-								"characters"
+								"comics",
+								"{{comicId}}",
+								"stories"
 							],
 							"query": [
 								{
@@ -463,13 +549,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/creators/{creatorId}/comics?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/creators/{{creatorId}}/comics?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"creators",
-								"{creatorId}",
+								"{{creatorId}}",
 								"comics"
 							],
 							"query": [
@@ -492,13 +578,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/creators/{creatorId}/events?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/creators/{{creatorId}}/events?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"creators",
-								"{creatorId}",
+								"{{creatorId}}",
 								"events"
 							],
 							"query": [
@@ -521,13 +607,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/creators/{creatorId}/series?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/creators/{{creatorId}}/series?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"creators",
-								"{creatorId}",
+								"{{creatorId}}",
 								"series"
 							],
 							"query": [
@@ -550,13 +636,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/creators/{creatorId}/stories?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/creators/{{creatorId}}/stories?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"creators",
-								"{creatorId}",
+								"{{creatorId}}",
 								"stories"
 							],
 							"query": [
@@ -611,13 +697,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/events/{eventId}?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/events/{{eventId}}?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"events",
-								"{eventId}"
+								"{{eventId}}"
 							],
 							"query": [
 								{
@@ -639,13 +725,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/events/{eventId}/characters?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/events/{{eventId}}/characters?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"events",
-								"{eventId}",
+								"{{eventId}}",
 								"characters"
 							],
 							"query": [
@@ -668,13 +754,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/events/{eventId}/comics?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/events/{{eventId}}/comics?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"events",
-								"{eventId}",
+								"{{eventId}}",
 								"comics"
 							],
 							"query": [
@@ -697,13 +783,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/events/{eventId}/creators?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/events/{{eventId}}/creators?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"events",
-								"{eventId}",
+								"{{eventId}}",
 								"creators"
 							],
 							"query": [
@@ -726,13 +812,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/events/{eventId}/series?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/events/{{eventId}}/series?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"events",
-								"{eventId}",
+								"{{eventId}}",
 								"series"
 							],
 							"query": [
@@ -755,13 +841,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/events/{eventId}/stories?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/events/{{eventId}}/stories?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"events",
-								"{eventId}",
+								"{{eventId}}",
 								"stories"
 							],
 							"query": [
@@ -844,13 +930,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/series/{seriesId}/characters?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/series/{{seriesId}}/characters?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"series",
-								"{seriesId}",
+								"{{seriesId}}",
 								"characters"
 							],
 							"query": [
@@ -873,13 +959,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/series/{seriesId}/comics?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/series/{{seriesId}}/comics?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"series",
-								"{seriesId}",
+								"{{seriesId}}",
 								"comics"
 							],
 							"query": [
@@ -902,7 +988,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/series/{{seriesId}}/creators?ts={{ts}}&apikey={{public_key}}",
+							"host": [
+								"{{Base}}"
+							],
+							"path": [
+								"series",
+								"{{seriesId}}",
+								"creators"
+							],
 							"query": [
 								{
 									"key": "ts",
@@ -923,13 +1017,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/series/{seriesId}/events?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/series/{{seriesId}}/events?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"series",
-								"{seriesId}",
+								"{{seriesId}}",
 								"events"
 							],
 							"query": [
@@ -952,13 +1046,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/series/{seriesId}/stories?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/series/{{seriesId}}/stories?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"series",
-								"{seriesId}",
+								"{{seriesId}}",
 								"stories"
 							],
 							"query": [
@@ -1041,13 +1135,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/stories/{storyId}/characters?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/stories/{{storyId}}/characters?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"stories",
-								"{storyId}",
+								"{{storyId}}",
 								"characters"
 							],
 							"query": [
@@ -1070,13 +1164,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/stories/{storyId}/comics?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/stories/{{storyId}}/comics?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"stories",
-								"{storyId}",
+								"{{storyId}}",
 								"comics"
 							],
 							"query": [
@@ -1099,13 +1193,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/stories/{storyId}/creators?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/stories/{{storyId}}/creators?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"stories",
-								"{storyId}",
+								"{{storyId}}",
 								"creators"
 							],
 							"query": [
@@ -1128,13 +1222,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Base}}/stories/{storyId}/events?ts={{ts}}&apikey={{public_key}}",
+							"raw": "{{Base}}/stories/{{storyId}}/events?ts={{ts}}&apikey={{public_key}}",
 							"host": [
 								"{{Base}}"
 							],
 							"path": [
 								"stories",
-								"{storyId}",
+								"{{storyId}}",
 								"events"
 							],
 							"query": [
